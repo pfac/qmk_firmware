@@ -28,7 +28,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 ,------|------|------|       |------+--------+------.
  *                                 |      |      |  (   |       |  {   |        |      |
  *                                 | Space| LGui |------|       |------| RGui   |Enter |
- *                                 |      |      |  )   |       |  }   |        |      |
+ *                                 |      |      | ~L1  |       | ~L1  |        |      |
  *                                 `--------------------'       `----------------------'
  *//*
  * Sptlgt: LGui + Space (for spotlight)
@@ -44,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         LGUI(KC_SPC),   KC_LALT,      LALT(KC_LSFT),  KC_LEFT,KC_RGHT,
                                               ALT_T(KC_APP),  KC_LGUI,
                                                               KC_LPRN,
-                                               KC_SPC,KC_LGUI,KC_RPRN,
+                                               KC_SPC,KC_LGUI,KC_FN1,
         // right hand
              KC_QUOT,     KC_6,   KC_7,   KC_8,   KC_9,   KC_0,             KC_BSPC,
              KC_FN1,      KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,             KC_MINS,
@@ -53,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   KC_UP,  KC_DOWN,KC_LBRC,KC_RBRC,          TG(1),
              KC_ESC,        CTL_T(KC_ESC),
              KC_LCBR,
-             KC_RCBR,KC_RGUI, KC_ENT
+             KC_FN1, KC_RGUI, KC_ENT
     ),
 /* Keymap 1: Symbol Layer
  *
