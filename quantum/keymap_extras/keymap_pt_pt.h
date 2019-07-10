@@ -20,7 +20,6 @@
 #include "keymap_common.h"
 
 /* Scan codes for the Portuguese (Portugal) keyboard layout */
-
 #define PT_BSLS KC_GRV   //  \|  same scancode as `~ on US layout
 #define PT_QUOT KC_MINS  //  '?  same scancode as -_ on US layout
 #define PT_LGLL KC_EQL   //  «»  same scancode as =+ on US layout
@@ -29,6 +28,7 @@
 #define PT_CCDL KC_SCLN  //  Ç   same scancode as ;: on US layout
 #define PT_MORD KC_QUOT  //  ºª same scancode as '" on US layout
 #define PT_TILD KC_BSLS  //  ~^ dead keys, same scancode as \| on US layout
+#define PT_LABK KC_NUBS  //  <> same scandcode as non-US \|
 #define PT_COMM KC_COMM  //  ,;  same scancode as ,< on US layout
 #define PT_DOT  KC_DOT   //  .:  same scancode as .> on US layout
 #define PT_MINS KC_SLSH  //  -_  same scancode as /? on US layout
@@ -40,14 +40,29 @@
 #define PT_GRV  LSFT(PT_ACUT)   // shifted ` (dead key)
 #define PT_FORD LSFT(PT_MORD)   // shifted ª
 #define PT_CIRC LSFT(PT_TILD)   // shifted ^ (dead key)
+#define PT_RABK LSFT(PT_LABK)   // shifted >
 #define PT_SCLN LSFT(PT_COMM)   // shifted ;
 #define PT_CLN  LSFT(PT_DOT)    // shifted :
+#define PT_UNDS LSFT(PT_MINS)   // shifted _
 
 // On the Portuguese the keypad comma and the keypad dot scancodes are
 // switched (because in Portugal comma is used as the decimal separator)
 #define PT_KPDT KC_KP_COMMA  //  keypad .
 #define PT_KPCM KC_KP_DOT    //  keypad ,
 
+// Shifted symbols
+#define PT_EXLM LSFT(KC_1)        // Exclamation point             !   shift+1
+#define PT_DQUT LSFT(KC_2)        // Double quotes                 "   shift+2
+#define PT_HASH LSFT(KC_3)        // Hash symbol                   #   shift+3
+#define PT_DLR  LSFT(KC_4)        // Dollar symbol                 $   shift+4
+#define PT_PERC LSFT(KC_5)        // Percent symbol                %   shift+5
+#define PT_AMPR LSFT(KC_6)        // Ampersand symbol              &   shift+6
+#define PT_SLSH LSFT(KC_7)        // Forward slash                 /   shift+7
+#define PT_LPRN LSFT(KC_8)        // Left parenthesis              (   shift+8
+#define PT_RPRN LSFT(KC_9)        // Right parenthesis             )   shift+9
+#define PT_EQL  LSFT(KC_0)        // Equals symbol                 =   shift+0
+
+// Alt Gr symbols
 #define PT_1UP    ALGR(KC_1)      // 1 superscript                 ¹   alt gr+1
 #define PT_AT     ALGR(KC_2)      // At sign                       @   alt+2
 #define PT_PND    ALGR(KC_3)      // Pound sign                    £   alt+3
