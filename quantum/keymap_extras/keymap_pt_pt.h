@@ -17,7 +17,7 @@
 #ifndef KEYMAP_PT_PT_H
 #define KEYMAP_PT_PT_H
 
-#include "keymap_common.h"
+#include "keymap.h"
 
 /* Scan codes for the Portuguese (Portugal) keyboard layout */
 #define PT_BSLS KC_GRV   //  \|  same scancode as `~ on US layout
