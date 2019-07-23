@@ -174,54 +174,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 
-/* Keymap 4: Specials layer
- *
- * ,-------------------------------------------------------.           ,-------------------------------------------------.
- * |          |       |       |      |       |      |      |           |      |      |       |      |      |      |      |
- * |----------+-------+-------+------+-------+------+------|           |------+------+-------+------+------+------+------|
- * | Alt+Tab  |       | Acute |      |       |      |      |           |      |      | Trema |  ^   |      |      |      |
- * |----------+-------+-------+------+-------+------|      |           |      |------+-------+------+------+------+------|
- * | Alt+Ctrl |       |       |      |       |      |------|           |------|      |       |      |      |      |      |
- * |----------+-------+-------+------+-------+------|      |           |      |------+-------+------+------+------+------|
- * |          | Grave |       |  Ç   |       |      |      |           |      |      |       |      |      |      |      |
- * `----------+-------+-------+------+-------+-------------'           `-------------+-------+------+------+------+------'
- *   |        |       |       |      | (~L4) |                                       | (~L4) |      |      |      |    |
- *   `---------------------------------------'                                       `---------------------------------'
- *                                           ,-------------.           ,-------------.
- *                                           |      |      |           |      |      |
- *                                   ,-------|------|------|           |------+------+-------.
- *                                   |       |      |      |           |      |      |       |
- *                                   |       |      |------|           |------|      |       |
- *                                   |       |      |      |           |      |      |       |
- *                                   `---------------------'           `---------------------'
- */
-// If it accepts an argument (i.e, is a function), it doesn't need KC_.
-// Otherwise, it needs KC_*
-[4] = LAYOUT_ergodox(  // layer 1 : default
-  // left hand
-  KC_TRNS,       KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,    KC_TRNS,
-  KC_TRNS,  KC_TRNS,     PT_ACUT,     KC_TRNS,     KC_TRNS,     KC_TRNS,    KC_TRNS,
-  KC_CALT,       KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,
-  KC_TRNS,       PT_GRV,      KC_TRNS,     PT_CCDL,     KC_TRNS,     KC_TRNS,    KC_TRNS,
-  KC_TRNS,       KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,
-
-                                                                     KC_TRNS,     KC_TRNS,
-                                                                                  KC_TRNS,
-                                                        KC_TRNS,     KC_TRNS,     KC_TRNS,
-
-  // right hand
-  KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,
-  KC_TRNS,     KC_TRNS,     PT_TRMA,     PT_CIRC,     KC_TRNS,     KC_TRNS,     KC_TRNS,
-               KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,
-  KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,
-               KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,     KC_TRNS,
-
-  KC_TRNS,     KC_TRNS,
-  KC_TRNS,
-  KC_TRNS,     KC_TRNS,     KC_TRNS
-),
-
-
 /* Keymap 5: NumPad layer
  *
  * ,------------------------------------------------.           ,-------------------------------------------------.
@@ -337,9 +289,16 @@ void override_with_dead_keycode(uint16_t keycode, keyevent_t *event) {
   }
 }
 
+
 bool is_shift_active(void) {
   return current_mods.left_shift || current_mods.right_shift;
 }
+
+
+bool is_alt_active(void) {
+  return current_mods.left_alt || current_mods.right_alt;
+}
+
 
 /** Map regular keys with symbols under Shift to send the UK/US layout symbols.
  *
@@ -419,12 +378,48 @@ bool override_shifted(uint16_t keycode, keyevent_t *event) {
 }
 
 
-bool process_record_user_aux(uint16_t keycode, keyevent_t *event) {
-#ifdef CONSOLE_ENABLE
-  uprintf("KL: kc: %u, col: %u, row: %u, pressed: %u\n", keycode, event->key.col, event->key.row, event->pressed);
-#endif 
+/** Map regular keys with symbols under Alt to send the UK/US layout symbols.
+ *
+ * This allows me to mimick the way Apple international UK/US layouts allow for
+ * dead-keys to be used with the Option/Alt key.
+ */
+bool override_alted(uint16_t keycode, keyevent_t *event) {
+  if (!is_alt_active())
+    return false;
 
+  switch (keycode) {
+    case KC_C:
+      override_with_keycode(PT_CCDL, event);
+      return true;
+    case KC_E:
+      override_with_keycode(PT_ACUT, event);
+      return true;
+    case KC_I:
+      override_with_keycode(PT_CIRC, event);
+      return true;
+    case KC_Z:
+      override_with_keycode(PT_GRV, event);
+      return true;
+    // For some reason, sending PT_TRMA through register_code does not work and
+    // produces some bad characters. I can't seem to fix this behaviour so
+    // instead I'm rolling with default alt+u for the pt_PT layout (which is
+    // a non-printable character). Tremma is also not used in the Portuguese
+    // language today.
+    //
+    //case KC_U:
+    //  override_with_keycode(PT_TRMA, event);
+    //  return true;
+  }
+
+  return false;
+}
+
+
+bool process_record_user_aux(uint16_t keycode, keyevent_t *event) {
   if (override_shifted(keycode, event))
+    return false;
+
+  if (override_alted(keycode, event))
     return false;
 
   switch (keycode) {
