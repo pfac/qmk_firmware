@@ -365,9 +365,9 @@ bool override_shifted(uint16_t keycode, keyevent_t *event) {
     // double-quotes) and using the symbol layer as the alternative, mimicking
     // Shift for the number keys.
     //
-    case KC_2:
-      override_with_keycode(PT_AT, event);
-      return true;
+    //case KC_2:
+    //  override_with_keycode(PT_AT, event);
+    //  return true;
     case KC_3:
       override_with_keycode(PT_HASH, event);
       return true;
