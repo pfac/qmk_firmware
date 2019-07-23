@@ -15,4 +15,4 @@
 // key would sometimes fail to send the code, and some other times would send
 // it multiple times.
 #undef TAP_CODE_DELAY
-#define TAP_CODE_DELAY 50
+#define TAP_CODE_DELAY 300
