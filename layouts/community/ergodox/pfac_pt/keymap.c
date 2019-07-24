@@ -7,7 +7,12 @@
 #define KC_NXTWRD LCTL(KC_RIGHT)
 #define KC_PRVWRD LCTL(KC_LEFT)
 
-struct {
+static struct {
+  uint16_t keycode;
+  uint16_t pressed_at;
+} last_key_press;
+
+static struct {
   unsigned int left_shift:1;
   unsigned int right_shift:1;
   unsigned int left_ctrl:1;
@@ -441,8 +446,20 @@ bool process_record_user_aux(uint16_t keycode, keyevent_t *event) {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  bool result;
   keyevent_t *event = &(record->event);
+  bool result;
+
+#ifdef CONSOLE_ENABLE
+  uprintf("Last key press: %u %u (%u)\n", last_key_press.keycode, last_key_press.pressed_at, timer_elapsed(last_key_press.pressed_at));
+#endif
+
+  if (event->pressed) {
+    if (keycode == last_key_press.keycode && timer_elapsed(last_key_press.pressed_at) <= PFAC_MIN_TIME_BETWEEN_SAME_PRESSES)
+      return false;
+  } else {
+    last_key_press.keycode = keycode;
+    last_key_press.pressed_at = timer_read();
+  }
 
   save_mods(keycode, event);
   result = process_record_user_aux(keycode, event);
