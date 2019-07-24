@@ -445,18 +445,26 @@ bool process_record_user_aux(uint16_t keycode, keyevent_t *event) {
 }
 
 
+bool is_key_twitching(uint16_t keycode, keyevent_t *event) {
+  uint16_t elapsed_time;
+
+  if (!event->pressed) return false;
+  if (keycode != last_key_press.keycode) return false;
+
+  elapsed_time = timer_elapsed(last_key_press.pressed_at);
+
+  return elapsed_time <= PFAC_MIN_TIME_BETWEEN_SAME_PRESSES;
+}
+
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   keyevent_t *event = &(record->event);
   bool result;
 
-#ifdef CONSOLE_ENABLE
-  uprintf("Last key press: %u %u (%u)\n", last_key_press.keycode, last_key_press.pressed_at, timer_elapsed(last_key_press.pressed_at));
-#endif
+  if (is_key_twitching(keycode, event))
+    return false;
 
-  if (event->pressed) {
-    if (keycode == last_key_press.keycode && timer_elapsed(last_key_press.pressed_at) <= PFAC_MIN_TIME_BETWEEN_SAME_PRESSES)
-      return false;
-  } else {
+  if (!event->pressed) {
     last_key_press.keycode = keycode;
     last_key_press.pressed_at = timer_read();
   }
