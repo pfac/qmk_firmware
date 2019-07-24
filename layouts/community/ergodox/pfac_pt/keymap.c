@@ -260,8 +260,6 @@ void save_mods(uint16_t keycode, keyevent_t *event) {
 }
 
 void restore_mods(void) {
-  clear_mods();
-
   if (current_mods.left_shift)  register_code16(KC_LSFT);
   if (current_mods.right_shift) register_code16(KC_RSFT);
   if (current_mods.left_ctrl)   register_code16(KC_LCTL);
@@ -471,7 +469,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   save_mods(keycode, event);
   result = process_record_user_aux(keycode, event);
-  restore_mods();
+
+  if (!result)
+    restore_mods();
 
   return result;
 }
