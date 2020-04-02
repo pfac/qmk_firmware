@@ -14,11 +14,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * | ` ~    |   Q  |   W  |   E  |   R  |   T  |   <  |           |  =   |   Y  |   U  |   I  |   O  |   P  |   \    |
  * |--------+------+------+------+------+------|   >  |           |  +   |------+------+------+------+------+--------|
- * | RCtrl  |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   ;  |   '    |
+ * | LCtrl  |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   ;  |   '    |
  * |--------+------+------+------+------+------| Hyper|           | Meh  |------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   /  | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |LCtrl | ~L1  | Home |  End | LAlt |                                       | RAlt |   [  |   ]  |   =  | RCtrl |
+ *   | ~L1  |   <  | Home |  End | LAlt |                                       | RAlt |   [  |   ]  |   =  | RCtrl |
  *   `----------------------------------'                                       `-----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        | LGui |  🔊+ |       | 🔆+ | RGui |
@@ -30,11 +30,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 LAYOUT_ergodox(
   // left hand
-  KC_ESC,  KC_1,   KC_2,   KC_3,   KC_4,    KC_5,    KC_MUTE,
+  KC_ESC,  KC_1,  KC_2,    KC_3,   KC_4,    KC_5,    KC_MUTE,
   KC_GRV,  KC_Q,  KC_W,    KC_E,   KC_R,    KC_T,    KC_LT,
-  KC_RCTL, KC_A,  KC_S,    KC_D,   KC_F,    KC_G,
+  KC_LCTL, KC_A,  KC_S,    KC_D,   KC_F,    KC_G,
   KC_LSFT, KC_Z,  KC_X,    KC_C,   KC_V,    KC_B,    ALL_T(KC_NO),
-  KC_LCTL, MO(1), KC_HOME, KC_END, KC_LALT,
+  MO(1),   KC_LT, KC_HOME, KC_END, KC_LALT,
                                             KC_LGUI, KC_VOLU,
                                                      KC_VOLD,
                                    KC_SPC,  KC_BSPC, MO(2),
@@ -59,7 +59,7 @@ LAYOUT_ergodox(
  * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |         |   %  |   ^  |   [  |   ]  |   ~  |      |           |      |   &  |   1  |   2  |   3  |   \  |        |
  * `---------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |       |      |      |      |      |                                       |      |    . |   0  |   =  |      |
+ *   |       |   >  |      |      |      |                                       |      |    . |   0  |   =  |      |
  *   `-----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.          ,-------------.
  *                                        |      |      |          |      |      |
@@ -75,7 +75,7 @@ LAYOUT_ergodox(
   KC_TRNS, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE, KC_TRNS,
   KC_TRNS, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,
   KC_TRNS, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, KC_TRNS,
-  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  KC_TRNS, KC_GT,   KC_TRNS, KC_TRNS, KC_TRNS,
                                                KC_TRNS, KC_TRNS,
                                                         KC_TRNS,
                                       KC_TRNS, KC_DEL,  KC_TRNS,
